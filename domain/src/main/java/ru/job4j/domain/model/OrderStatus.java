@@ -2,14 +2,16 @@ package ru.job4j.domain.model;
 
 import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
 @Getter
-@EqualsAndHashCode
+public enum OrderStatus {
+    NOT_CONFIRMED("Не подтверждён"),
+    CONFIRMED("Подтверждён"),
+    SENT("Отправлен"),
+    DELIVERED("Доставлен");
 
-public class OrderStatus {
-    private int id;
-    private boolean isConfirmed;
-    private boolean isDelivered;
+    private final String statusName;
+
+    private OrderStatus(String statusName) {
+        this.statusName = statusName;
+    }
 }
