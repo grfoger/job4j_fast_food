@@ -4,6 +4,7 @@ import lombok.*;
 
 @Getter
 public enum OrderStatus {
+    NOT_AVAILABLE("Не доступен"),
     NOT_CONFIRMED("Не подтверждён"),
     CONFIRMED("Подтверждён"),
     SENT("Отправлен"),

@@ -5,14 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.domain.model.BonusCard;
-import ru.job4j.domain.model.Order;
 import ru.job4j.order.service.BonusCardService;
 
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/bonus")
-public class CardController {
+public class BonusCardController {
 
     private final BonusCardService cardService;
 

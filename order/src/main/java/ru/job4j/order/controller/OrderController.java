@@ -9,6 +9,7 @@ import ru.job4j.domain.model.OrderStatus;
 import ru.job4j.order.service.OrderService;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
@@ -24,14 +25,18 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Order> findById(@PathVariable int id) {
-        Order order = orders.findById(id);
-        return new ResponseEntity<>(order, order == null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        Optional<Order> order = orders.findById(id);
+        return new ResponseEntity<>(order.orElse(new Order()), order.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/status/{id}")
     public ResponseEntity<OrderStatus> getStatus(@PathVariable int id) {
-        Order order = orders.findById(id);
-        return new ResponseEntity<>(order.getStatus(), order == null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        Optional<Order> order = orders.findById(id);
+        OrderStatus status = OrderStatus.NOT_AVAILABLE;
+        if (order.isPresent()) {
+            status = order.get().getStatus();
+        }
+        return new ResponseEntity<>(status, order.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/")
