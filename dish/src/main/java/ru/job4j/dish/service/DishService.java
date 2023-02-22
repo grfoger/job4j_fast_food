@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.domain.model.Dish;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public interface DishService {
@@ -12,5 +13,5 @@ public interface DishService {
     Dish delete(Dish dish);
     Dish findById(int id);
     Dish findByName(String name);
-    Collection<Dish> findAll();
+    List<Dish> findAll();
 }
