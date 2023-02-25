@@ -17,7 +17,7 @@ public class AdminController {
 
     @GetMapping(value = {"/", "/index"})
     public String getIndex(Model model) {
-        //model.addAttribute("dishes", service.findAllDishes());
+        model.addAttribute("dishes", service.findAllDishes());
         return "index";
     }
 

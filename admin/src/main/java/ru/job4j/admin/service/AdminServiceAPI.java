@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.job4j.domain.model.Dish;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,9 +22,26 @@ public class AdminServiceAPI implements AdminService {
         this.client = client;
     }
 
+    @Override
     public List<Dish> findAllDishes() {
         System.out.println(url);
+        return
+            getList(String.format(
+                    "%s", url
+            ));
+
+        /**
         return client.exchange(url, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Dish>>() { }).getBody();
+         **/
+    }
+
+    private List<Dish> getList(String url) {
+        List<Dish> body = client.exchange(
+                url, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Dish>>() {
+                }
+        ).getBody();
+        return body == null ? Collections.emptyList() : body;
     }
 }
