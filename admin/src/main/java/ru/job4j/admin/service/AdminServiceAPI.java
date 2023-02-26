@@ -25,23 +25,9 @@ public class AdminServiceAPI implements AdminService {
     @Override
     public List<Dish> findAllDishes() {
         System.out.println(url);
-        return
-            getList(String.format(
-                    "%s", url
-            ));
-
-        /**
-        return client.exchange(url, HttpMethod.GET, null,
+        List<Dish> body = client.exchange(url, HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Dish>>() { }).getBody();
-         **/
-    }
-
-    private List<Dish> getList(String url) {
-        List<Dish> body = client.exchange(
-                url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<Dish>>() {
-                }
-        ).getBody();
         return body == null ? Collections.emptyList() : body;
     }
+
 }
