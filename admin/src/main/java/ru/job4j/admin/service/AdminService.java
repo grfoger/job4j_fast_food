@@ -8,4 +8,12 @@ import java.util.List;
 public interface AdminService {
 
     List<Dish> findAllDishes();
+
+    Dish save(Dish dish);
+
+    Dish findById(int id);
+
+    boolean update(Dish dish);
+
+    boolean delete(int id);
 }
