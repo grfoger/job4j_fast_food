@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = "ru.job4j.domain")
 public class DishApplication {
     public static void main(String[] args) {
         SpringApplication.run(DishApplication.class, args);

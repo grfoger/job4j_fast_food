@@ -2,6 +2,7 @@ package ru.job4j.dish.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.job4j.dish.model.DishEntity;
 import ru.job4j.dish.repository.DishRepository;
 import ru.job4j.domain.model.Dish;
 
@@ -14,27 +15,29 @@ public class SimpleDishService implements DishService {
 
     private final DishRepository dishes;
     @Override
-    public Dish add(Dish dish) {
+    public DishEntity add(DishEntity dish) {
         return dishes.save(dish);
     }
 
     @Override
-    public Dish update(Dish dish) {
+    public DishEntity update(DishEntity dish) {
         return dishes.save(dish);
     }
 
     @Override
-    public void delete(Dish dish) {
+    public void delete(DishEntity dish) {
         dishes.delete(dish);
     }
 
     @Override
-    public Optional<Dish> findById(int id) {
+    public Optional<DishEntity> findById(int id) {
         return dishes.findById(id);
     }
 
     @Override
-    public List<Dish> findAll() {
-        return (List<Dish>) dishes.findAll();
+    public List<DishEntity> findAll() {
+        System.out.println(dishes.findAll());
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!");
+        return dishes.findAll();
     }
 }
