@@ -9,13 +9,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "dish")
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class DishEntity extends Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private int id;
     private String name;
     private String description;

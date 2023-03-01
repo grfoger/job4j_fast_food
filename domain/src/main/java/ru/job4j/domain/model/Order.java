@@ -8,11 +8,11 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-@EqualsAndHashCode
-
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Order {
+    @EqualsAndHashCode.Include
     private int id;
     private int orderNumber;
     private OrderStatus status;
-    private List<Product> products;
+    private List<? extends Product> products;
 }
