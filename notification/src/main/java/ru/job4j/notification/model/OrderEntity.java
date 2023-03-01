@@ -6,6 +6,7 @@ import ru.job4j.domain.model.OrderStatus;
 import ru.job4j.domain.model.Product;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,12 @@ public class OrderEntity extends Order {
     }
     @Override
     public void setProducts(List<? extends Product> products) {
-        this.products = (List<ProductEntity>) products;
+        List<ProductEntity> productEntityList = new ArrayList<>();
+        products.forEach(x -> {
+            if (x instanceof ProductEntity) {
+                productEntityList.add((ProductEntity) x);
+            }
+        });
+        this.products = productEntityList;
     }
 }
