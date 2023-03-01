@@ -10,6 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "order")
+@Getter
+@Setter
 @NoArgsConstructor
 public class OrderEntity extends Order {
     @Id
@@ -20,7 +22,11 @@ public class OrderEntity extends Order {
     @OneToMany
     private List<ProductEntity> products;
 
-    public OrderEntity(int id, int orderNumber, OrderStatus status, List<Product> products) {
+    public OrderEntity(int id, int orderNumber, OrderStatus status, List<ProductEntity> products) {
         super(id, orderNumber, status, products);
+    }
+    @Override
+    public void setProducts(List<? extends Product> products) {
+        this.products = (List<ProductEntity>) products;
     }
 }

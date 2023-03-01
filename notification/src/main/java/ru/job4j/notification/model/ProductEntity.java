@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "product")
+@Getter
+@Setter
 @NoArgsConstructor
 public class ProductEntity extends Product {
     @Id
