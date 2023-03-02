@@ -12,10 +12,12 @@ import java.util.Optional;
 @Service
 public class SimpleOrderService implements OrderService {
 
-    private KafkaTemplate<Integer, String> template;
+    private KafkaTemplate<Integer, Order> template;
     @Override
     public Order save(Order order) {
-        template.send("orders", order.toString());
+        System.out.println("BEFORE SEND");
+        template.send("orders", order);
+        System.out.println("AFTER SEND");
         return order;
     }
 

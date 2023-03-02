@@ -15,6 +15,8 @@ public class KafkaOrderController {
 
     @KafkaListener(topics = {"orders"})
     public void takeMessage(ConsumerRecord<Integer, Order> input) {
+        System.out.println("GET GET GET");
+        System.out.println(input.value());
         service.save(input.value());
     }
 }
