@@ -11,6 +11,9 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.KafkaMessageListenerContainer;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
+import ru.job4j.domain.model.Order;
 
 import java.util.Map;
 
@@ -27,13 +30,13 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<Integer, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        ConcurrentKafkaListenerContainerFactory<Integer, Order> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 
     @Bean
-    public ConsumerFactory<Integer, String> consumerFactory() {
+    public ConsumerFactory<Integer, Order> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
     @Bean
@@ -41,8 +44,10 @@ public class KafkaConsumerConfig {
         return Map.ofEntries(
                 entry(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer),
                 entry(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class),
-                entry(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class),
+                entry(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class),
                 entry(ConsumerConfig.GROUP_ID_CONFIG, kafkaGroupId)
         );
     }
+
+
 }
