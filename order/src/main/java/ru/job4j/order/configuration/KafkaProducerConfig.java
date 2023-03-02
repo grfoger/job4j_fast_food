@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.converter.StringJsonMessageConverter;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+import ru.job4j.domain.model.Order;
 
 import java.util.Map;
 
@@ -22,7 +25,9 @@ public class KafkaProducerConfig {
 
     @Bean
     public KafkaTemplate<Integer, String> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
+        KafkaTemplate<Integer, String> template = new KafkaTemplate<>(producerFactory());
+        //template.setMessageConverter(new StringJsonMessageConverter());
+        return template;
     }
 
     @Bean
