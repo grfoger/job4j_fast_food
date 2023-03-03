@@ -14,7 +14,7 @@ public class SimpleNotificationStore implements NotificationRepository {
     private final AtomicInteger count = new AtomicInteger(0);
     @Override
     public void save(Order value) {
-        System.out.println("Delivered order " + value.getOrderNumber() + " with status " + value.getStatus());
+        System.out.println("Delivered order " + value.getOrderNumber());
         store.put(count.incrementAndGet(), value);
     }
 

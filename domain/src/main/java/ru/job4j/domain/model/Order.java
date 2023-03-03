@@ -14,5 +14,5 @@ public class Order {
     private int id;
     private int orderNumber;
     private OrderStatus status;
-    private List<? extends Product> products;
+    private List<Product> products;
 }

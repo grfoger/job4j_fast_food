@@ -34,7 +34,7 @@ public class OrderController {
         Optional<Order> order = orders.findById(id);
         OrderStatus status = OrderStatus.NOT_AVAILABLE;
         if (order.isPresent()) {
-            status = order.get().getStatus();
+            //status = order.get().getStatus();
         }
         return new ResponseEntity<>(status, order.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
