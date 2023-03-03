@@ -31,12 +31,12 @@ public class KafkaProducerConfig {
 
 
     @Bean
-    public KafkaTemplate<Integer, Order> kafkaTemplate() {
+    public KafkaTemplate<Integer, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
     @Bean
-    public ProducerFactory<Integer, Order> producerFactory() {
+    public ProducerFactory<Integer, String> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
@@ -45,7 +45,7 @@ public class KafkaProducerConfig {
         return Map.ofEntries(
                 entry(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer),
                 entry(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class),
-                entry(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class),
+                entry(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class),
                 entry(ProducerConfig.CLIENT_ID_CONFIG, kafkaGroupId)
         );
     }
