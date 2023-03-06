@@ -25,7 +25,8 @@ public class SimpleOrderService implements OrderService {
     @Override
     public Order save(Order order) {
         try {
-            template.send("orders", new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(order));
+            template.send("orders", new ObjectMapper().writeValueAsString(order));
+            template.send("preorder", new ObjectMapper().writeValueAsString(order));
         } catch (Exception e) {
             e.printStackTrace();
         }
