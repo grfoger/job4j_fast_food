@@ -9,6 +9,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import ru.job4j.domain.model.Order;
+import ru.job4j.domain.model.OrderStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +22,9 @@ public class SimpleOrderService implements OrderService {
 
     private KafkaTemplate<Integer, String> template;
 
-    private List<Order> takeOrders = new ArrayList<>();
+    private List<Order> takeOrders;
+
+    private OrderStatus currentStatus = OrderStatus.NOT_AVAILABLE;
     @Override
     public Order save(Order order) {
         try {
@@ -54,6 +57,17 @@ public class SimpleOrderService implements OrderService {
         }
         return takeOrders;
     }
+
+
+    @Override
+    public OrderStatus getStatus() {
+        return currentStatus;
+    }
+    @KafkaListener(topics = {"status"})
+    public void getKafkaStatus(ConsumerRecord<Integer, String> status) throws IOException {
+        currentStatus = new ObjectMapper().readValue(status.value().getBytes(), OrderStatus.class);
+    }
+
 
     @KafkaListener(topics = {"findAll"})
     public void takeMessage(ConsumerRecord<Integer, String> orders) throws IOException {

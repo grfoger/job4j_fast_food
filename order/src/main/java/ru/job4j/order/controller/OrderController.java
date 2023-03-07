@@ -23,6 +23,11 @@ public class OrderController {
         return orders.findAll();
     }
 
+    @GetMapping("/status")
+    public OrderStatus getStatus() {
+        return orders.getStatus();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Order> findById(@PathVariable int id) {
         Optional<Order> order = orders.findById(id);

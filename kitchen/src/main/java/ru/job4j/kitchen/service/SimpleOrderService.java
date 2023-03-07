@@ -24,7 +24,7 @@ public class SimpleOrderService implements OrderService {
 
     private void cookOrder(Order order, int orderId) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10);
         order.setStatus(OrderStatus.SENT);
         repository.save(new OrderDTO(orderId, order.getOrderNumber(), order.getStatus().getStatusCode()));
         template.send("status", new ObjectMapper().writeValueAsString(order));
