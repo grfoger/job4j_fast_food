@@ -3,7 +3,6 @@ package ru.job4j.order.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,11 +11,10 @@ import ru.job4j.domain.model.Order;
 import ru.job4j.domain.model.OrderStatus;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+
 @Service
 public class SimpleOrderService implements OrderService {
 
@@ -25,6 +23,11 @@ public class SimpleOrderService implements OrderService {
     private List<Order> takeOrders;
 
     private OrderStatus currentStatus = OrderStatus.NOT_AVAILABLE;
+
+    public SimpleOrderService(KafkaTemplate<Integer, String> template) {
+        this.template = template;
+    }
+
     @Override
     public Order save(Order order) {
         try {

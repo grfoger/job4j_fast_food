@@ -18,7 +18,7 @@ public class KafkaOrderController {
 
     private KafkaTemplate<Integer, String> template;
 
-    @KafkaListener(topics = {"preoder"})
+    @KafkaListener(topics = {"preorder"})
     public void takeMessage(ConsumerRecord<Integer, String> order) throws IOException {
         Order value = new ObjectMapper().readValue(order.value().getBytes(), Order.class);
         service.save(value);

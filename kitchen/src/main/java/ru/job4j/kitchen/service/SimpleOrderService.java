@@ -27,7 +27,7 @@ public class SimpleOrderService implements OrderService {
             Thread.sleep(10);
         order.setStatus(OrderStatus.SENT);
         repository.save(new OrderDTO(orderId, order.getOrderNumber(), order.getStatus().getStatusCode()));
-        template.send("status", new ObjectMapper().writeValueAsString(order));
+        template.send("status", new ObjectMapper().writeValueAsString(OrderStatus.DELIVERED));
         } catch (InterruptedException | JsonProcessingException e) {
             e.printStackTrace();
         }
