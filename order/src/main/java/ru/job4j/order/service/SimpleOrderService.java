@@ -66,7 +66,7 @@ public class SimpleOrderService implements OrderService {
     public OrderStatus getStatus() {
         return currentStatus;
     }
-    @KafkaListener(topics = {"status"})
+    @KafkaListener(topics = {"cooked_order"})
     public void getKafkaStatus(ConsumerRecord<Integer, String> status) throws IOException {
         currentStatus = new ObjectMapper().readValue(status.value().getBytes(), OrderStatus.class);
     }
