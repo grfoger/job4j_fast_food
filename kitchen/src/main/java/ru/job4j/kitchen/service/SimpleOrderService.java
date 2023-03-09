@@ -11,7 +11,7 @@ import ru.job4j.domain.model.OrderStatus;
 import ru.job4j.kitchen.model.OrderDTO;
 import ru.job4j.kitchen.repository.OrderRepository;
 
-import java.util.Random;
+
 
 @Service
 @AllArgsConstructor
@@ -26,12 +26,11 @@ public class SimpleOrderService implements OrderService {
 
     private void cookOrder(Order order, int orderId) {
         try {
-        if (new Random().nextInt(10) != 1) {
+        if ((int) System.currentTimeMillis() % 10 != 1) {
                 Thread.sleep(60_000);
                 order.setStatus(OrderStatus.SENT);
                 repository.save(new OrderDTO(orderId, order.getOrderNumber(), order.getStatus().getStatusCode()));
                 template.send("cooked_order", new ObjectMapper().writeValueAsString(OrderStatus.DELIVERED));
-
         } else {
             template.send("cooked_order", new ObjectMapper().writeValueAsString(OrderStatus.CANCELED));
         }
