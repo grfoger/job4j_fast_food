@@ -28,21 +28,7 @@ public class OrderController {
         return orders.getStatus();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Order> findById(@PathVariable int id) {
-        Optional<Order> order = orders.findById(id);
-        return new ResponseEntity<>(order.orElse(new Order()), order.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
-    }
 
-    @GetMapping("/status/{id}")
-    public ResponseEntity<OrderStatus> getStatus(@PathVariable int id) {
-        Optional<Order> order = orders.findById(id);
-        OrderStatus status = OrderStatus.NOT_AVAILABLE;
-        if (order.isPresent()) {
-            status = order.get().getStatus();
-        }
-        return new ResponseEntity<>(status, order.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND);
-    }
 
     @PostMapping("/")
     public ResponseEntity<Order> create(@RequestBody Order order) {
@@ -55,11 +41,4 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Order> delete(@PathVariable int id) {
-        Order order = new Order();
-        order.setId(id);
-        orders.delete(order);
-        return ResponseEntity.ok().build();
-    }
 }

@@ -12,11 +12,14 @@ import ru.job4j.domain.model.OrderStatus;
 import ru.job4j.kitchen.model.OrderDTO;
 import ru.job4j.kitchen.repository.OrderRepository;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 
 @Service
 @AllArgsConstructor
-@EnableScheduling
+
 public class OrderService {
     private final OrderRepository repository;
     private final KafkaTemplate<Integer, String> template;
@@ -29,20 +32,22 @@ public class OrderService {
     private void cookOrder(Order order, int orderId) {
         try {
         if ((int) System.currentTimeMillis() % 10 != 1) {
-                itsCookTime();
+                Callable<String> cookTask = () -> {
+                    Thread.sleep(60_000);
+                    return "Cooked!";
+                };
+                FutureTask<String> future = new FutureTask<>(cookTask);
+                new Thread(future).start();
+                System.out.println(future.get());
                 order.setStatus(OrderStatus.SENT);
                 repository.save(new OrderDTO(orderId, order.getOrderNumber(), order.getStatus().getStatusCode()));
                 template.send("cooked_order", new ObjectMapper().writeValueAsString(OrderStatus.DELIVERED));
         } else {
             template.send("cooked_order", new ObjectMapper().writeValueAsString(OrderStatus.CANCELED));
         }
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    @Scheduled(fixedDelay = 60_000)
-    public void itsCookTime() {
-        System.out.println("It's cook time!");
-    }
 }
